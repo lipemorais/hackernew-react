@@ -19,7 +19,7 @@ class App extends Component {
     }
 
     this.setSearchTopStories =
-    // this.fetchSearchTopStories = this.fetchSearchTopStories.bind(this);
+    this.fetchSearchTopStories = this.fetchSearchTopStories.bind(this);
     this.setSearchTopStories.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
     this.onSearchSubmit = this.onSearchSubmit.bind(this);
@@ -86,7 +86,12 @@ class App extends Component {
   }
 }
 
-const Search = ({ value, onChange, onSubmit, children}) =>
+const Search = ({
+  value,
+  onChange,
+  onSubmit,
+  children
+}) =>
   <form onSubmit={onSubmit}>
     <input
       type="text"
