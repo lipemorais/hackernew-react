@@ -17,7 +17,7 @@ class App extends Component {
       searchTerm: DEFAULT_QUERY,
     }
 
-    this.setSearchTopStories =
+    this.setSearchTopStories = this.setSearchTopStories.bind(this)
     this.fetchSearchTopStories = this.fetchSearchTopStories.bind(this);
     this.setSearchTopStories.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
