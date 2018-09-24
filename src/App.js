@@ -22,9 +22,8 @@ class App extends Component {
     }
 
     this.needToSearchTopStories = this.needToSearchTopStories.bind(this);
-    this.setSearchTopStories = this.setSearchTopStories.bind(this)
+    this.setSearchTopStories = this.setSearchTopStories.bind(this);
     this.fetchSearchTopStories = this.fetchSearchTopStories.bind(this);
-    this.setSearchTopStories.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
     this.onSearchSubmit = this.onSearchSubmit.bind(this);
     this.onDismiss = this.onDismiss.bind(this);
@@ -66,9 +65,9 @@ class App extends Component {
     ];
 
     this.setState({
-      result: {
+      results: {
         ...results,
-        [searchKey]: {hits: updatedHits, page }
+        [searchKey]: { hits: updatedHits, page }
       }
     });
   }
@@ -107,7 +106,14 @@ class App extends Component {
     const page = (
       results &&
       results[searchKey] &&
-      results[searchKey].page) || 0;
+      results[searchKey].page
+    ) || 0;
+
+    const list = (
+      results &&
+      results[searchKey] &&
+      results[searchKey].hits
+    ) || [];
 
     return (
       <div className="page">
@@ -120,17 +126,15 @@ class App extends Component {
             Search
           </Search>
         </div>
+        <Table
+          list={list}
+          onDismiss={this.onDismiss}
+        />
         <div className="interactions">
             <Button onClick={() => this.fetchSearchTopStories(searchKey, page + 1)}>
               More
             </Button>
         </div>
-        { results &&
-          <Table
-          list={results.hits}
-          onDismiss={this.onDismiss}
-        />
-        }
       </div>
     );
   }
