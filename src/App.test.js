@@ -28,13 +28,13 @@ describe('App', () => {
 describe('Search', () => {
   it('renders whithout crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<Search>Search</Search>, div);
+    ReactDOM.render(<Search onSubmit={() => {}} >Search</Search>, div);
     ReactDOM.unmountComponentAtNode(div);
   });
 
   test('has a valid snpashot', () => {
     const component = renderer.create(
-      <Search>Search</Search>
+      <Search onSubmit={() => { }}>Search</Search>
     );
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
@@ -45,19 +45,19 @@ describe('Button',()=>{
 
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<Button>Give Me More</Button>, div);
+    ReactDOM.render(<Button onClick={() => {}}>Give Me More</Button>, div);
     ReactDOM.unmountComponentAtNode(div);
   });
 
   it('checks the children content', () => {
-    const element = shallow(<Button>More</Button>);
-    console.log(element);
+    const element = shallow(<Button onClick={() => { }}>More</Button>);
+
     expect(element.text()).toBe('More');
   });
 
   test('has a valid snapshot', () => {
     const component = renderer.create(
-      <Button>Give Me More</Button>
+      <Button onClick={() => { }}>Give Me More</Button>
     );
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
@@ -74,12 +74,12 @@ describe('Table',()=>{
 
   it('renders without crashing', () => {
       const div = document.createElement('div');
-      ReactDOM.render(<Table { ...props } />, div);
+    ReactDOM.render(<Table onDismiss={() => {}} { ...props } />, div);
   });
 
   it('show two items in list', () => {
     const element = shallow(
-      <Table { ...props } />
+      <Table onDismiss={() => {}} { ...props } />
     );
 
     expect(element.find('.table-row').length).toBe(2);
@@ -87,7 +87,7 @@ describe('Table',()=>{
 
   test('has a valid snapshot', () => {
     const component = renderer.create(
-      <Table { ...props } />
+      <Table onDismiss={() => { }} { ...props } />
     );
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
