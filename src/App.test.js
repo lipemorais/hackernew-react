@@ -1,7 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import renderer from 'react-test-renderer';
-import App from './App';
+import Enzyme, { shallow } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+import App, { Search, Button, Table } from './App';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('App', () => {
 
@@ -18,5 +22,74 @@ describe('App', () => {
 
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
-  })
-})
+  });
+});
+
+describe('Search', () => {
+  it('renders whithout crashing', () => {
+    const div = document.createElement('div');
+    ReactDOM.render(<Search>Search</Search>, div);
+    ReactDOM.unmountComponentAtNode(div);
+  });
+
+  test('has a valid snpashot', () => {
+    const component = renderer.create(
+      <Search>Search</Search>
+    );
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+});
+
+describe('Button',()=>{
+
+  it('renders without crashing', () => {
+    const div = document.createElement('div');
+    ReactDOM.render(<Button>Give Me More</Button>, div);
+    ReactDOM.unmountComponentAtNode(div);
+  });
+
+  it('checks the children content', () => {
+    const element = shallow(<Button>More</Button>);
+    console.log(element);
+    expect(element.text()).toBe('More');
+  });
+
+  test('has a valid snapshot', () => {
+    const component = renderer.create(
+      <Button>Give Me More</Button>
+    );
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+});
+
+describe('Table',()=>{
+  const props = {
+    list: [
+      { title: '1', author: '1', num_comments: 1, points: 2, objectID: 'y' },
+      { title: '2', author: '2', num_comments: 1, points: 2, objectID: 'z' },
+    ],
+  };
+
+  it('renders without crashing', () => {
+      const div = document.createElement('div');
+      ReactDOM.render(<Table { ...props } />, div);
+  });
+
+  it('show two items in list', () => {
+    const element = shallow(
+      <Table { ...props } />
+    );
+
+    expect(element.find('.table-row').length).toBe(2);
+  });
+
+  test('has a valid snapshot', () => {
+    const component = renderer.create(
+      <Table { ...props } />
+    );
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+});
